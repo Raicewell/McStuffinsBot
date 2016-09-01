@@ -81,8 +81,8 @@ public class CommandCenter {
     }
     
     public void playClip (IVoiceChannel channel, String filename){
-        AudioPlayer player = AudioPlayer.getAudioPlayerForGuild(channel.getGuild());
         try{
+           AudioPlayer player = AudioPlayer.getAudioPlayerForGuild(channel.getGuild());
            IVoiceChannel targetChannel = channel;
            targetChannel.join();
            ClassLoader classLoader = getClass().getClassLoader();
