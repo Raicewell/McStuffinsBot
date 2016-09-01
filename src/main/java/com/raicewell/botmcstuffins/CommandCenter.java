@@ -92,8 +92,9 @@ public class CommandCenter {
             while(player.getPlaylistSize() > 0){}
             targetChannel.leave();
            }
-           catch (NullPointerException E){
+           catch (Exception E){
                System.out.println(classLoader.getResource(filename + ".wav"));
+               E.printStackTrace();
            }
            
         }
