@@ -81,18 +81,20 @@ public class CommandCenter {
     }
     
     public void playClip (IVoiceChannel channel, String filename){
+        String resourcePath = "InitialPath";
         try{
             AudioPlayer player = AudioPlayer.getAudioPlayerForGuild(channel.getGuild());
             channel.join();
             ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-            File getFile = new File(classLoader.getResource(filename + ".wav").getFile());
+            resourcePath = classLoader.getResource(filename + ".wav").getPath();
+            File getFile = new File(resourcePath);
             player.queue(getFile);
             while(player.getPlaylistSize() > 0){}
             channel.leave();
         }
         catch(IOException | UnsupportedAudioFileException | MissingPermissionsException | java.lang.NullPointerException e){
-            System.out.println("Error Thrown in PlayClip!");
-            System.out.println(e.getCause());
+            System.out.println("Error Thrown in PlayClip attempting to play " + filename);
+            System.out.println(resourcePath);
             e.printStackTrace();
             channel.leave();
         }
