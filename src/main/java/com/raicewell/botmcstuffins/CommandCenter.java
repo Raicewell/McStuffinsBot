@@ -5,6 +5,7 @@
  */
 package com.raicewell.botmcstuffins;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -22,7 +23,6 @@ import sx.blah.discord.util.MessageBuilder;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
 import sx.blah.discord.util.RequestBuffer;
-import sx.blah.discord.util.audio.providers.FileProvider;
 
 /**
  *
@@ -85,7 +85,8 @@ public class CommandCenter {
         try{
            IVoiceChannel targetChannel = channel;
            targetChannel.join();
-           FileProvider getFile = new FileProvider("src/main/resources/" + filename + ".wav");
+           ClassLoader classLoader = getClass().getClassLoader();
+           File getFile = new File(classLoader.getResource(filename + ".wav").getFile());
            player.queue(getFile);
            while(player.getPlaylistSize() > 0){}
            targetChannel.leave();
@@ -100,7 +101,7 @@ public class CommandCenter {
         String command = commandParams[0];
         if(command.equals("cmd")) {getCommands(message.getChannel());}
         else if(command.equals("logout")) {logout();}
-        if(!message.getAuthor().getConnectedVoiceChannels().isEmpty()){
+        else if(!message.getAuthor().getConnectedVoiceChannels().isEmpty()){
             playClip(message.getAuthor().getConnectedVoiceChannels().get(0), command);
         }
     }
