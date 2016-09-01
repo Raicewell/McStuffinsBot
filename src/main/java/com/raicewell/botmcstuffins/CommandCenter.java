@@ -82,10 +82,11 @@ public class CommandCenter {
     }
     
     public void playClip (IVoiceChannel channel, String filename){
+        String resourcePath = "InitialPath";    
         try{
             AudioPlayer player = AudioPlayer.getAudioPlayerForGuild(channel.getGuild());
             channel.join();
-            String resourcePath = CommandCenter.class.getClassLoader().getResource(filename + ".wav").getFile();
+            resourcePath = CommandCenter.class.getClassLoader().getResource(filename + ".wav").getFile();
             File getFile = new File(resourcePath);            
             player.queue(getFile);
             while(player.getPlaylistSize() > 0){}
