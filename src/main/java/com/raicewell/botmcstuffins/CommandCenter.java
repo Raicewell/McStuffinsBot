@@ -7,6 +7,7 @@ package com.raicewell.botmcstuffins;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import sx.blah.discord.util.audio.AudioPlayer;
@@ -81,19 +82,17 @@ public class CommandCenter {
     }
     
     public void playClip (IVoiceChannel channel, String filename){
-        String resourcePath = "InitialPath";
         try{
             AudioPlayer player = AudioPlayer.getAudioPlayerForGuild(channel.getGuild());
             channel.join();
-            resourcePath = Thread.currentThread().getContextClassLoader().getResource(filename + ".wav").getPath();
-            File getFile = new File(resourcePath);
+            String resourcePath = CommandCenter.class.getClassLoader().getResource(filename + ".wav").getFile();
+            File getFile = new File(resourcePath);            
             player.queue(getFile);
             while(player.getPlaylistSize() > 0){}
             channel.leave();
         }
         catch(IOException | UnsupportedAudioFileException | MissingPermissionsException | java.lang.NullPointerException e){
             System.out.println("Error Thrown in PlayClip attempting to play " + filename);
-            System.out.println(resourcePath);
             e.printStackTrace();
             channel.leave();
         }
