@@ -86,11 +86,15 @@ public class CommandCenter {
            IVoiceChannel targetChannel = channel;
            targetChannel.join();
            ClassLoader classLoader = getClass().getClassLoader();
-           File getFile = new File(classLoader.getResource(filename + ".wav").getFile());
-           System.out.println(getFile.getAbsolutePath());
-           player.queue(getFile);
-           while(player.getPlaylistSize() > 0){}
-           targetChannel.leave();
+           try{
+            File getFile = new File(classLoader.getResource(filename + ".wav").getFile());
+            player.queue(getFile);
+            while(player.getPlaylistSize() > 0){}
+            targetChannel.leave();
+           }
+           catch (NullPointerException E){
+               System.out.println(classLoader.getResource(filename + ".wav"));
+           }
            
         }
         catch(IOException | UnsupportedAudioFileException | MissingPermissionsException e){
