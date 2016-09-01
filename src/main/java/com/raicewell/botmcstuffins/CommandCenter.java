@@ -82,18 +82,19 @@ public class CommandCenter {
     
     public void playClip (IVoiceChannel channel, String filename){
         try{
-           AudioPlayer player = AudioPlayer.getAudioPlayerForGuild(channel.getGuild());
-           IVoiceChannel targetChannel = channel;
-           targetChannel.join();
-           ClassLoader classLoader = getClass().getClassLoader();
-           
+            AudioPlayer player = AudioPlayer.getAudioPlayerForGuild(channel.getGuild());
+            channel.join();
+            ClassLoader classLoader = ClassLoader.getSystemClassLoader();
             File getFile = new File(classLoader.getResource(filename + ".wav").getFile());
             player.queue(getFile);
             while(player.getPlaylistSize() > 0){}
-            targetChannel.leave();
+            channel.leave();
         }
         catch(IOException | UnsupportedAudioFileException | MissingPermissionsException | java.lang.NullPointerException e){
-            System.out.println(e);
+            System.out.println("Error Thrown in PlayClip!");
+            System.out.println(e.getCause());
+            e.printStackTrace();
+            channel.leave();
         }
     }
     
@@ -102,7 +103,8 @@ public class CommandCenter {
         if(command.equals("cmd")) {getCommands(message.getChannel());}
         else if(command.equals("logout")) {logout();}
         else if(!message.getAuthor().getConnectedVoiceChannels().isEmpty()){
-            playClip(message.getAuthor().getConnectedVoiceChannels().get(0), command);
+            IVoiceChannel vChannel = message.getAuthor().getConnectedVoiceChannels().get(0);
+            playClip(vChannel, command);
         }
     }
     
