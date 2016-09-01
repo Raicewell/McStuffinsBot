@@ -8,6 +8,7 @@ package com.raicewell.botmcstuffins;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import sx.blah.discord.util.audio.AudioPlayer;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
@@ -21,7 +22,6 @@ import sx.blah.discord.util.MessageBuilder;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
 import sx.blah.discord.util.RequestBuffer;
-import sx.blah.discord.util.audio.AudioPlayer;
 import sx.blah.discord.util.audio.providers.FileProvider;
 
 /**
