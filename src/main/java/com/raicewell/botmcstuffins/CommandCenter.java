@@ -86,7 +86,7 @@ public class CommandCenter {
         try{
             AudioPlayer player = AudioPlayer.getAudioPlayerForGuild(channel.getGuild());
             channel.join();
-            resourcePath = CommandCenter.class.getClassLoader().getResource(filename + ".wav").getFile();
+            resourcePath = Thread.currentThread().getContextClassLoader().getResource(filename + ".wav").getFile();
             File getFile = new File(resourcePath);            
             player.queue(getFile);
             while(player.getPlaylistSize() > 0){}
