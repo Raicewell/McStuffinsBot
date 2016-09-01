@@ -26,7 +26,7 @@
             <classifier>shaded</classifier>
         </dependency>
     </dependencies>
-    
+     
     <build>
     <plugins>
         <plugin>
