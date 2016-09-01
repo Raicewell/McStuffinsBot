@@ -8,6 +8,7 @@ package com.raicewell.botmcstuffins;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import sx.blah.discord.util.audio.AudioPlayer;
@@ -86,9 +87,8 @@ public class CommandCenter {
         try{
             AudioPlayer player = AudioPlayer.getAudioPlayerForGuild(channel.getGuild());
             channel.join();
-            resourcePath = CommandCenter.class.getClassLoader().getResource(filename + ".wav").getFile();
-            //resourcePath = "/home/theraice/Programs/McStuffinsBot/McStuffinsBot/target/classes/" + filename + ".wav" ;
-            File getFile = new File(resourcePath);            
+            resourcePath = "/home/theraice/Programs/McStuffinsBot/McStuffinsBot/target/classes/" + filename + ".wav" ;           
+            File getFile = new File(resourcePath);                       
             player.queue(getFile);
             while(player.getPlaylistSize() > 0){}
             channel.leave();
