@@ -95,7 +95,7 @@ public class CommandCenter {
         }
         catch(IOException | UnsupportedAudioFileException | MissingPermissionsException | java.lang.NullPointerException e){
             System.out.println("Error Thrown in PlayClip attempting to play " + filename);
-            System.out.println("Resource Path: resourcePath");
+            System.out.println("Resource Path: " + resourcePath);
             e.printStackTrace();
             channel.leave();
         }
