@@ -87,6 +87,7 @@ public class CommandCenter {
            targetChannel.join();
            ClassLoader classLoader = getClass().getClassLoader();
            File getFile = new File(classLoader.getResource(filename + ".wav").getFile());
+           System.out.println(getFile.getAbsolutePath());
            player.queue(getFile);
            while(player.getPlaylistSize() > 0){}
            targetChannel.leave();
