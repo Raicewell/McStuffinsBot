@@ -86,7 +86,8 @@ public class CommandCenter {
         try{
             AudioPlayer player = AudioPlayer.getAudioPlayerForGuild(channel.getGuild());
             channel.join();
-            resourcePath = CommandCenter.class.getClassLoader().getResource(filename + ".wav").getFile();
+            //resourcePath = CommandCenter.class.getClassLoader().getResource(filename + ".wav").getFile();
+            resourcePath = filename + ".wav";
             File getFile = new File(resourcePath);            
             player.queue(getFile);
             while(player.getPlaylistSize() > 0){}
@@ -94,6 +95,7 @@ public class CommandCenter {
         }
         catch(IOException | UnsupportedAudioFileException | MissingPermissionsException | java.lang.NullPointerException e){
             System.out.println("Error Thrown in PlayClip attempting to play " + filename);
+            System.out.println("Resource Path: resourcePath");
             e.printStackTrace();
             channel.leave();
         }
