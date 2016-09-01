@@ -85,7 +85,7 @@ public class CommandCenter {
         try{
            IVoiceChannel targetChannel = channel;
            targetChannel.join();
-           FileProvider getFile = new FileProvider("Sound Clips/" + filename + ".wav");
+           FileProvider getFile = new FileProvider("src/main/resources/" + filename + ".wav");
            player.queue(getFile);
            while(player.getPlaylistSize() > 0){}
            targetChannel.leave();
@@ -100,7 +100,9 @@ public class CommandCenter {
         String command = commandParams[0];
         if(command.equals("cmd")) {getCommands(message.getChannel());}
         else if(command.equals("logout")) {logout();}
-        else{playClip(message.getAuthor().getConnectedVoiceChannels().get(0), command);}       
+        if(!message.getAuthor().getConnectedVoiceChannels().isEmpty()){
+            playClip(message.getAuthor().getConnectedVoiceChannels().get(0), command);
+        }
     }
     
     public void registerListener(IModule module){
