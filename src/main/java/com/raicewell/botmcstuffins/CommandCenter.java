@@ -59,6 +59,8 @@ public class CommandCenter {
         addCommand("hook");
         addCommand("spoon");
         addCommand("anus");
+        addCommand("candycorn");
+        addCommand("mary");
         
     }
     
