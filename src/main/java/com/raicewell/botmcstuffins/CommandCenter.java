@@ -51,6 +51,15 @@ public class CommandCenter {
         addCommand("grape");
         addCommand("chum");
         addCommand("starfish");
+        addCommand("enigma");
+        addCommand("nope");
+        addCommand("msjackson");
+        addCommand("banana");
+        addCommand("justafriend");
+        addCommand("hook");
+        addCommand("spoon");
+        addCommand("anus");
+        
     }
     
     protected void getCommands(IChannel channel){
