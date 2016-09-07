@@ -44,10 +44,11 @@ public class CommandCenter {
         commandList.add("cmd");
         commandList.add("logout");
         
-        //URL filePath = this.getClass().getClassLoader().getResource("");
-        try{URI filePath = this.getClass().getClassLoader().getResource("").toURI();
+       
+        try{
+            String filePath = System.getProperty("java.class.path").split(";")[0];
             if(filePath == null) System.out.println("File Path Not Found");
-            try{System.out.println("Resource path found: " + filePath.getPath());} catch(Exception e){e.printStackTrace();}
+            try{System.out.println("Resource path found: " + filePath);} catch(Exception e){e.printStackTrace();}
             File[] fileList = new File(filePath).listFiles();
             for(File file: fileList){
                 System.out.println(file.getName());
@@ -153,7 +154,7 @@ public class CommandCenter {
                     String[] eventCommand = inputString.split(" ");
 
                     //If the command exists, execute. 
-                    if(commandList.contains(eventCommand[0].toLowerCase())){
+                    if(commandList.contains(eventCommand[0])){
                         executeCommand(eventCommand, event.getMessage());
                     }
                     else{
