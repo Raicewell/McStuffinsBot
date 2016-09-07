@@ -41,18 +41,19 @@ public class CommandCenter {
     
      private void initializeDefaultCommands(){
         commandList = new ArrayList<>();
-        try{
-            Enumeration<URL> files = this.getClass().getClassLoader().getResources("");
-            while(files.hasMoreElements()){
-                URL file = files.nextElement();
-                if(file.getFile().endsWith(".wav")){
-                    addCommand(file.getFile());
-                }
+        commandList.add("cmd");
+        commandList.add("logout");
+        
+        URL filePath = this.getClass().getClassLoader().getResource("");
+        File[] fileList = new File(filePath.getFile()).listFiles();
+        for(File file: fileList){
+            System.out.println(file.getName());
+            if(file.getName().endsWith(".wav")){
+                addCommand(file.getName().replace(".wav", ""));
             }
         }
-        catch(IOException ex){
-            ex.printStackTrace();
-        }        
+       
+        System.out.println("Found " + commandList.size() + " commands.");
     }
     
     protected void getCommands(IChannel channel){
@@ -89,8 +90,8 @@ public class CommandCenter {
         try{
             AudioPlayer player = AudioPlayer.getAudioPlayerForGuild(channel.getGuild());
             channel.join();
-            resourcePath = "/home/theraice/Programs/McStuffinsBot/McStuffinsBot/target/classes/" + filename + ".wav" ;           
-            File getFile = new File(resourcePath);                       
+            URL filePath = this.getClass().getClassLoader().getResource("");
+            File getFile = new File(filePath.getFile() + filename + ".wav");                       
             player.queue(getFile);
             while(player.getPlaylistSize() > 0){}
             channel.leave();
@@ -106,7 +107,11 @@ public class CommandCenter {
     public void executeCommand (String[] commandParams, IMessage message){
         String command = commandParams[0];
         if(command.equals("cmd")) {getCommands(message.getChannel());}
-        else if(command.equals("logout")) {logout();}
+        else if(command.equals("logout")) {
+            if(message.getAuthor().getName().contains("Raice")){
+                logout();
+            }
+        }
         else if(!message.getAuthor().getConnectedVoiceChannels().isEmpty()){
             IVoiceChannel vChannel = message.getAuthor().getConnectedVoiceChannels().get(0);
             playClip(vChannel, command);
