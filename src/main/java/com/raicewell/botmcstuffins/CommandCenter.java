@@ -7,9 +7,9 @@ package com.raicewell.botmcstuffins;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventSubscriber;
@@ -45,18 +45,18 @@ public class CommandCenter {
         commandList.add("logout");
         
         //URL filePath = this.getClass().getClassLoader().getResource("");
-        ClassLoader classLoader = this.getClass().getClassLoader();
-        if(classLoader == null)System.out.println("ClassLoader's null.");
-        URL filePath = classLoader.getResource("");
-        if(filePath == null) System.out.println("File Path Not Found");
-        try{System.out.println("Resource path found: " + filePath.getPath());} catch(Exception e){e.printStackTrace();}
-        File[] fileList = new File(filePath.getFile()).listFiles();
-        for(File file: fileList){
-            System.out.println(file.getName());
-            if(file.getName().endsWith(".wav")){
-                addCommand(file.getName().replace(".wav", ""));
+        try{URI filePath = this.getClass().getClassLoader().getResource("").toURI();
+            if(filePath == null) System.out.println("File Path Not Found");
+            try{System.out.println("Resource path found: " + filePath.getPath());} catch(Exception e){e.printStackTrace();}
+            File[] fileList = new File(filePath).listFiles();
+            for(File file: fileList){
+                System.out.println(file.getName());
+                if(file.getName().endsWith(".wav")){
+                    addCommand(file.getName().replace(".wav", ""));
+                }
             }
-        }
+        }catch(Exception ex){System.out.println("Failed uri"); ex.printStackTrace();}
+        
        
         System.out.println("Found " + commandList.size() + " commands.");
     }
