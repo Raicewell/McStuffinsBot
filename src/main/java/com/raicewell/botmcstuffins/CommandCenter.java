@@ -45,6 +45,7 @@ public class CommandCenter {
         commandList.add("logout");
         
         URL filePath = this.getClass().getClassLoader().getResource("");
+        if(filePath == null) System.out.println("File Path Not Found");
         System.out.println("Resource path found: " + filePath.getPath());
         File[] fileList = new File(filePath.getFile()).listFiles();
         for(File file: fileList){
