@@ -44,19 +44,24 @@ public class CommandCenter {
         commandList.add("cmd");
         commandList.add("logout");
         
+        String filePath = System.getProperty("java.class.path").split(";")[0] + "\\";
+        System.out.println(filePath);
+        
+        //If the class path isn't the classes folder, this is being run from a jar. Find that path!
+        if(!filePath.contains("classes")){
+        filePath = filePath.substring(0, filePath.indexOf("/"))+ "classes/";
+        System.out.println(filePath);
+        }
        
-        try{
-            String filePath = System.getProperty("java.class.path").split(";")[0];
-            if(filePath == null) System.out.println("File Path Not Found");
-            try{System.out.println("Resource path found: " + filePath);} catch(Exception e){e.printStackTrace();}
-            File[] fileList = new File(filePath).listFiles();
-            for(File file: fileList){
-                System.out.println(file.getName());
-                if(file.getName().endsWith(".wav")){
-                    addCommand(file.getName().replace(".wav", ""));
-                }
+        try{System.out.println("Resource path found: " + filePath);} catch(Exception e){e.printStackTrace();}
+        File[] fileList = new File(filePath).listFiles();
+        for(File file: fileList){
+            System.out.println(file.getName());
+            if(file.getName().endsWith(".wav")){
+                addCommand(file.getName().replace(".wav", ""));
             }
-        }catch(Exception ex){System.out.println("Failed uri"); ex.printStackTrace();}
+        }
+        
         
        
         System.out.println("Found " + commandList.size() + " commands.");
