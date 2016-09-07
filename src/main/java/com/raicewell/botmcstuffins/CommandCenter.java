@@ -49,7 +49,7 @@ public class CommandCenter {
         
         //If the class path isn't the classes folder, this is being run from a jar. Find that path!
         if(!filePath.contains("classes")){
-        filePath = filePath.substring(0, filePath.indexOf("/"))+ "classes/";
+        filePath = filePath.substring(0, filePath.indexOf("/"))+ "/classes/";
         System.out.println(filePath);
         }
        
