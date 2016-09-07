@@ -32,6 +32,7 @@ import sx.blah.discord.util.audio.AudioPlayer;
  */
 public class CommandCenter {
     private static java.util.ArrayList<String> commandList;
+    private static String resourcePath;
     private static boolean isReady = false;
     protected IDiscordClient botClient;
     
@@ -44,25 +45,26 @@ public class CommandCenter {
         commandList.add("cmd");
         commandList.add("logout");
         
-        String filePath = System.getProperty("java.class.path").split(";")[0] + "\\";
-        System.out.println(filePath);
+        //Initialize resource path for clips.
+        resourcePath = System.getProperty("java.class.path").split(";")[0] + "\\";
+        System.out.println(resourcePath);
         
         //If the class path isn't the classes folder, this is being run from a jar. Find that path!
-        if(!filePath.contains("classes")){
-        filePath = filePath.substring(0, filePath.indexOf("/"))+ "/classes/";
-        System.out.println(filePath);
+        if(!resourcePath.contains("classes")){
+        resourcePath = resourcePath.substring(0, resourcePath.indexOf("/"))+ "/classes/";
+        System.out.println(resourcePath);
         }
        
-        try{System.out.println("Resource path found: " + filePath);} catch(Exception e){e.printStackTrace();}
-        File[] fileList = new File(filePath).listFiles();
+        System.out.println("Resource path found: " + resourcePath);
+        
+        //Get the files in the resource path.
+        File[] fileList = new File(resourcePath).listFiles();
         for(File file: fileList){
             System.out.println(file.getName());
             if(file.getName().endsWith(".wav")){
                 addCommand(file.getName().replace(".wav", ""));
             }
         }
-        
-        
        
         System.out.println("Found " + commandList.size() + " commands.");
     }
@@ -97,12 +99,10 @@ public class CommandCenter {
     }
     
     public void playClip (IVoiceChannel channel, String filename){
-        String resourcePath = "InitialPath";    
         try{
             AudioPlayer player = AudioPlayer.getAudioPlayerForGuild(channel.getGuild());
-            channel.join();
-            URL filePath = this.getClass().getClassLoader().getResource("");
-            File getFile = new File(filePath.getFile() + filename + ".wav");                       
+            channel.join();            
+            File getFile = new File(resourcePath + filename + ".wav");                       
             player.queue(getFile);
             while(player.getPlaylistSize() > 0){}
             channel.leave();
