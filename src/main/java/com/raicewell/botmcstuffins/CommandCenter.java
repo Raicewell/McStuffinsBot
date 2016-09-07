@@ -8,10 +8,9 @@ package com.raicewell.botmcstuffins;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.FileSystems;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import sx.blah.discord.util.audio.AudioPlayer;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
@@ -25,6 +24,7 @@ import sx.blah.discord.util.MessageBuilder;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
 import sx.blah.discord.util.RequestBuffer;
+import sx.blah.discord.util.audio.AudioPlayer;
 
 /**
  *
@@ -39,29 +39,20 @@ public class CommandCenter {
         botClient = client;
     }
     
-     private static void initializeDefaultCommands(){
+     private void initializeDefaultCommands(){
         commandList = new ArrayList<>();
-        addCommand("!!");
-        addCommand("cmd");        
-        addCommand("logout");
-        addCommand("pantyraid");
-        addCommand("420");
-        addCommand("fdup");
-        addCommand("fdup_long");
-        addCommand("grape");
-        addCommand("chum");
-        addCommand("starfish");
-        addCommand("enigma");
-        addCommand("nope");
-        addCommand("msjackson");
-        addCommand("banana");
-        addCommand("justafriend");
-        addCommand("hook");
-        addCommand("spoon");
-        addCommand("anus");
-        addCommand("candycorn");
-        addCommand("mary");
-        
+        try{
+            Enumeration<URL> files = this.getClass().getClassLoader().getResources("");
+            while(files.hasMoreElements()){
+                URL file = files.nextElement();
+                if(file.getFile().endsWith(".wav")){
+                    addCommand(file.getFile());
+                }
+            }
+        }
+        catch(IOException ex){
+            ex.printStackTrace();
+        }        
     }
     
     protected void getCommands(IChannel channel){
