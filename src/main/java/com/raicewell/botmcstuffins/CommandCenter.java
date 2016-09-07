@@ -44,6 +44,7 @@ public class CommandCenter {
         commandList = new ArrayList<>();
         commandList.add("cmd");
         commandList.add("logout");
+        commandList.add("reloadclips");
         
         //Initialize resource path for clips.
         resourcePath = System.getProperty("java.class.path").split(";")[0] + "\\";
@@ -60,12 +61,11 @@ public class CommandCenter {
         //Get the files in the resource path.
         File[] fileList = new File(resourcePath).listFiles();
         for(File file: fileList){
-            System.out.println(file.getName());
             if(file.getName().endsWith(".wav")){
                 addCommand(file.getName().replace(".wav", ""));
             }
         }
-       
+        
         System.out.println("Found " + commandList.size() + " commands.");
     }
     
@@ -122,6 +122,14 @@ public class CommandCenter {
             if(message.getAuthor().getName().contains("Raice")){
                 logout();
             }
+            else{
+                sendMessage(message.getChannel(), "YOU AIN'T McSTUFFINS, YO!");
+            }
+        }
+        else if(command.equals("reloadclips")){
+            sendMessage(message.getChannel(), "Reloading clips, clips momentarily unavailable.");
+            initializeDefaultCommands();
+            sendMessage(message.getChannel(), "Clips reloaded. Good to go!");
         }
         else if(!message.getAuthor().getConnectedVoiceChannels().isEmpty()){
             IVoiceChannel vChannel = message.getAuthor().getConnectedVoiceChannels().get(0);
