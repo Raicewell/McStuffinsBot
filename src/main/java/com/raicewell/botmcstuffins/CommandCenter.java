@@ -48,7 +48,7 @@ public class CommandCenter {
         
         //Initialize resource path for clips.
         resourcePath = System.getProperty("java.class.path").split(";")[0] + "\\";
-        System.out.println(resourcePath);
+        System.out.println("Initial Resource Path :" + resourcePath);
         
         //If the class path isn't the classes folder, this is being run from a jar. Find that path!
         if(!resourcePath.contains("classes")){
@@ -56,7 +56,7 @@ public class CommandCenter {
         System.out.println(resourcePath);
         }
        
-        System.out.println("Resource path found: " + resourcePath);
+        System.out.println("Final Resource Path: " + resourcePath);
         
         //Get the files in the resource path.
         File[] fileList = new File(resourcePath).listFiles();
